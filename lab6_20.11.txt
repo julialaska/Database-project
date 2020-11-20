@@ -1,0 +1,86 @@
+Zad 1
+1.1
+SELECT AVG(waga)from kreatura where rodzaj='wiking';
+
+select count(nazwa) from kreatura; 
+wylicza ilosc wierszy
+select rodzaj,count(nazwa) from kreatura group by rodzaj;
+grupowanie ze wzgledu na rodzaj
+
+1.2
+select rodzaj,avg(waga) from kreatura group by rodzaj;
+select rodzaj,count(nazwa) from kreatura group by rodzaj;
+SELECT rodzaj,AVG(waga),count(rodzaj)FROM kreatura GROUP BY rodzaj;
+1.3
+SELECT AVG(Year(dataUr)),rodzaj FROM kreatura GROUP by rodzaj;
+
+Zad 2
+select sum(udzwig) from kreatura where rodzaj='wiking';
+select rodzaj,count(*) from kreatura where count(*)>1 group by rodzaj;
+select rodzaj,count(*) from kreatura gropu by rodzaj having count (*)>1;
+select rodzaj,count(*) as licznik from kreatura gropu by rodzaj having count licznik>1;
+select rodzaj,udzwig as sila from kreatura where sila>1;
+2.1
+SELECT rodzaj,SUM(waga) FROM zasob GROUP BY rodzaj;
+2.2
+select nazwa,sum(waga) from zasob where ilosc>=4 group by nazwa;
+select nazwa,avg(waga) from zasob where ilosc>=4 group by nazwa having sum(waga)>10;
+SELECT nazwa,AVG(waga) FROM zasob GROUP BY nazwa HAVING sum(waga)>10 and sum(ilosc)>=4;
+
+2.3
+SELECT COUNT(DISTINCT(nazwa)),rodzaj FROM zasob where ilosc>1 GROUP BY rodzaj;
+
+Zad 3
+select * from kreatura, ekwipunek;
+select * from kreatura, ekwipunek where kreatura.idKreatury=1;
+select * from ekwipunek where idKreatury=1; tylko dla Bjorn
+select nazwa,idEkwipunku,ekwipunek.idKreatury,idZasobu,ilosc from kreautura, ekwipunek where ekwipunek.idKreatury=1 and kreatura.idKreatury=1;
+SELECT nazwa,kreatura.idkreatury,ekwipunek.id,idzasobu FROM kreatura, ekwipunek WHERE ekwipunek.idkreatury=kreatura.idkreatury;
+select nazwa,kreatura.idkreatury,ekwipunek.idkreatury,idzasobu from kreatura, ekwipunek where ekwipunek.idkreatury=kreatura.idkreatury and kreatura.nazwa='Bjorn';
+
+3.1
+select nazwa,idzasobu from kreatura k, ekwipunek e where e.idkreatury=k and k.nazwa='Bjorn';
+select nazwa,idzasobu from kreatura , ekwipunek  where ekwipunek.idkreatury=kreatura.idkreatury and kreatura.nazwa='Bjorn';
+SELECT nazwa,idzasobu FROM kreatura INNER JOIN ekwipunek ON ekwipunek.idkreatury=kreatura.idkreatury AND kreatura.nazwa='Bjorn';
+
+
+SELECT kreatura.nazwa,ekwipunek.ilosc,ekwipunek.idzasobu FROM kreatura,ekwipunek where kreatura.Idkreatury=ekwipunek.Idkreatury;
+SELECT kreatura.nazwa,SUM(ekwipunek.ilosc) FROM kreatura INNER JOIN ekwipunek ON kreatura.Idkreatury=ekwipunek.Idkreatury GROUP BY nazwa
+
+3.2
+??SELECT k.nazwa, e.ilosc, z.nazwa FROM kreatura AS k, ekwipunek AS e, zasob AS z WHERE k.idKreatury = e.idKreatury AND e.idZasobu = z.idZasobu;
+
+SELECT kreatura.nazwa,zasob.nazwa FROM kreatura,ekwipunek,zasob WHERE kreatura.Idkreatury=ekwipunek.Idkreatury AND ekwipunek.idzasobu=zasob.idzasobu ORDER BY kreatura.nazwa;
+SELECT kreatura.nazwa,zasob.nazwa FROM kreatura INNER JOIN ekwipunek ON kreatura.Idkreatury=ekwipunek.Idkreatury  INNER JOIN zasob ON ekwipunek.idzasobu=zasob.idzasobu ORDER BY kreatura.nazwa;
+
+3.3
+
+select count(idKreatury)from kreatura;
+select count(distinct(idKreatury))from kreatura;
+
+select k.nazwa, k.idKreatury,e.idKreatury from kreatura k LEFT JOIN ekwipunek e ON k.idKreatury=e.idKreatury;
+
+select k.nazwa, k.idKreatury,e.idKreatury,e.idzasobu from kreatura k LEFT JOIN ekwipunek e ON k.idKreatury=e.idKreatury where e.idkreatury is null;
+
+select k.nazwa, k.idKreatury,e.idKreatury from ekwipunek e LEFT JOIN kreatura k ON k.idKreatury=e.idKreatury;
+
+select k.nazwa, k.idKreatury,e.idKreatury,e.idzasobu from kreatura k LEFT JOIN ekwipunek e ON k.idKreatury=e.idKreatury where e.idkreatury is not null;
+wszystkie przypasowane
+
+select s.nazwa from etapy-wyprawy ew left join sektor s on ew.sektor=s.id_sektora;
+wszystkie rekordy z tabeli etapy wyprawy dopasowania rowne id sektora
+
+elect s.nazwa,s.id_sektora from etapy-wyprawy ew left join sektor s on ew.sektor=s.id_sektora where s.id_sektora;
+
+select distinct sektor from etapy_wyprawy;
+
+select id_sektora from sektor;
+
+sleect ew.sektor, s.nazwa from sektor s left join etapy_wyprawy ew on s.id_sektora=ew.sektor;
+select s.id_sektora,s.nazwa,ew.sektor from sektor s left join etapy_wyprawy ew on s.id_sektora=ew.sektor;
+
+select s.id_sektora,s.nazwa,ew.sektor from sektor s left join etapy_wyprawy ew on s.id_sektora=ew.sektor where etapy_wyprawy is not null;
+
+
+
+
