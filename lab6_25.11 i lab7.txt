@@ -1,0 +1,125 @@
+select k.nazwa, k.idkreatury, e.idkreattury from kreatura k left join ekwipunek e on k.idkreatury=e.id.kreatury;
+
+SELECT distinct idkreatury from ekwipunek where idkreatury is not null;
+
+
+select idkreatury from keatuea where idkreatury in (ELECT distinct idkreatury from ekwipunek where idkreatury is not null;
+                                            not in 
+
+
+wyświetl wszystkie idKreatury z tabeli kreatura
+gdzie to idKreatury nie występuje w tabeli
+ekwipunek;
+SELECT idKreatury FROM kreatura WHERE idKreatury
+NOT IN (SELECT idKreatury FROM ekwipunek
+WHERE idKreatury IS NOT NULL);
+
+
+
+natural join laczy automatycznie tabele
+
+select * from ekwipunek natural join zasob;
+wszystkie duplikujące się tabele zostają pominięte
+
+select * from kreatura natural join ekwipunek;
+
+Zad 4
+4.1
+SELECT kreatura.nazwa,zasob.nazwa from kreatura natural join ekwipunek where year(keratura.dataUr) between 1670 and 1680 and where rodzaj='wiking';
+
+SELECT kreatura.nazwa,zasob.nazwa FROM kreatura NATURAL JOIN ekwipunek INNER join zasob ON zasob.idzasobu = ekwipunek.idzasobu WHERE YEAR(kreatura.dataUr) BETWEEN 1670 AND 1680 AND kreatura.rodzaj='wiking';
+SELECT k.nazwa,z.nazwa FROM kreatura as k NATURAL JOIN ekwipunek as e INNER join zasob as z ON z.idzasobu = e.idzasobu WHERE YEAR(k.dataUr) BETWEEN 1670 AND 1680 AND k.rodzaj='wiking';
+4.2
+SELECT kreatura.nazwa, ekwipunek.idZasobu, zasob.nazwa, kreatura.dataUr FROM kreatura  NATURAL JOIN ekwipunek JOIN zasob  ON ekwipunek.idZasobu=zasob.idZasobu WHERE zasob.rodzaj = 'jedzenie' ORDER BY dataUr ASC LIMIT 5;
+
+4.3
+select idkreatury, idkreatury from kreatura, kreatura;
+select k1.idkreatury, k2.idkreatury from kreatura as k1, kreatura k2 where k1.kreatury=k2.idkreatury;
+
+
+SELECT CONCAT(tabk1.nazwa, " - ", tabk2.nazwa) FROM kreatura AS tabk1, kreatura AS tabk2
+WHERE tabk1.idKreatury - tabk2.idKreatury=5;
+
+
+
+SELECT CONCAT(tabk1.nazwa, " - ", tabk2.nazwa) FROM kreatura AS tabk1, kreatura AS tabk2
+WHERE tabk1.idKreatury=tabk2.idKreatury+5;
+
+Zad 5
+5.1
+ilosc ekwipunku= suma ilosc ekwipunku
+
+select kreatura.rodzaj,zasob.rodzaj,avg(zasob.waga*ekwipunek.ilosc) from kreatura,ekwipunek,zasob where kreautura.idKreatury=ekwipunek.idKreatury and ekwipunek.idZasobu=zasob.idZasobu and kreatura.rodzaj!=('malpa')and kreatura.rodzaj!=('waz')
+group by rodzaj having sum(ekwipunek.ilosc) < 30;
+
+select kreatura.rodzaj,zasob.rodzaj,avg(zasob.waga*ekwipunek.ilosc) from kreatura,ekwipunek,zasob where kreautura.idKreatury=ekwipunek.idKreatury and ekwipunek.idZasobu=zasob.idZasobu and kreatura.rodzaj not in ('malpa','waz')
+group by rodzaj having sum(ekwipunek.ilosc) < 30;
+
+
+5.2
+min(), max(), podzapytanie???
+
+
+ select rodzaj,nazwa,min(dataUr) as min,max(dataUr)as max from kreatura group by rodzaj;
+
+
+lab_07
+1.1
+CREATE TABLE kreatura SELECT * FROM wikingowie.kreatura; 
+CREATE TABLE uczestnicy SELECT * FROM wikingowie.uczestnicy; 
+CREATE TABLE etapy_wyprawy SELECT * FROM wikingowie.etapy_wyprawy;
+CREATE TABLE sektor SELECT * FROM wikingowie.sektor; 
+CREATE TABLE wyprawa SELECT * FROM wikingowie.wyprawa;
+1.2
+select kreatura.nazwa from kreatura where id_wyprawy is null;
+select nazwa, id_wyprawy from kreatura left join uczestnicy on uczestnicy.id_uczestnika=kreatura.idkreatury where id_wyprawy is null;
+1.3
+
+select wyprawa.nazwa, sum(ilosc) from wyprawa inner join uczestnicy on uczestnicy.id_wyprawy=wyprawa.id_wyprawy inner join kreatura on uczestnicy.id_uczestnika=kreatura.idKreatury inner join ekwipunek on ekwipunek.idKreatury=kreatura.idKreatury group by wyprawa.nazwa;
+
+select wyprawa.nazwa, sum(ilosc) from wyprawa inner join uczestnicy on uczestnicy.id_wyprawy=wyprawa.id_wyprawy inner join kreatura on uczestnicy.id_uczestnika=kreatura.idkreatury group by w.nazwa;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
