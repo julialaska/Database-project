@@ -1,0 +1,46 @@
+Zad 2
+2.1
+select rodzaj,group_concat(nazwa) from kreatura group by rodzaj;
+group_concat(nazwa SEPARATOR "--")
+
+select wyprawa.nazwa
+
+
+select wyprawa.nazwa,wyprawa.id_wyprawy,count(uczestnicy.id_uczestnika),group_concat(kreatura.nazwa)  from wyprawa join uczestnicy on uczestnicy.id_wyprawy=wyprawa.id_wyprawy join kreatura on uczestnicy.id_uczestnika=kreatura.idkreatury group by wyprawa.nazwa;
+                                                                                                      from wyprawa,kreatura,uczestnicy where kreatura.idkreatury=uczestnicy.id_uczestnika and wyprawa.id_wyprawy=uczestnicy.id_uczestnika 
+SELECT wyprawa.nazwa, COUNT(uczestnicy.id_uczestnika), GROUP_CONCAT(kreatura.nazwa) FROM wyprawa JOIN uczestnicy ON uczestnicy.id_wyprawy=wyprawa.id_wyprawy
+JOIN kreatura ON uczestnicy.id_uczestnika=kreatura.idKreatury GROUP BY wyprawa.nazwa;
+
+
+2.2
+
+SELECT etapy_wyprawy.idEtapu, wyprawa.nazwa, sektor.nazwa, wyprawa.data_rozpoczecia, wyprawa.kierownik, kreatura.nazwa FROM etapy_wyprawy
+JOIN sektor ON sektor.id_sektora=etapy_wyprawy.sektor
+JOIN wyprawa ON wyprawa.id_wyprawy=etapy_wyprawy.idWyprawy
+INNER JOIN kreatura ON wyprawa.kierownik=kreatura.idKreatury
+ORDER BY wyprawa.data_rozpoczecia, etapy_wyprawy.idEtapu;
+
+SELECT etapy_wyprawy.sektor,wyprawa.nazwa,sektor.nazwa,wyprawa.kierownik,kreatura.nazwa, wyprawa.data_rozpoczecia FROM etapy_wyprawy,sektor,kreatura,wyprawa,uczestnicy where etapy_wyprawy.sektor=sektor.id_sektora AND etapy_wyprawy.idWyprawy=wyprawa.id_wyprawy AND uczestnicy.id_wyprawy=wyprawa.id_wyprawy AND kreatura.IdKreatury = uczestnicy.id_uczestnika AND id_uczestnika=wyprawa.kierownik ORDER BY wyprawa.data_rozpoczecia, etapy_wyprawy.kolejnosc;
+
+
+Zad 3
+3.1
+select nazwa count(ilosc odwiedzin) from sektor 
+select nazwa, ifnull(rodzaj, "Nie ma rodzaju") from zasob;
+
+
+select sektor.nazwa, count(etapy_wyprawy.idWyprawy from sektor left join etapy_wyprawy on etapy_wyprawy.sektor=sektor.id_sektora group by sektor.nazwa;
+
+
+
+select nazwa, if(rodzaj='wiking','wiking','inny rodzaj' from kreatura
+
+3.2
+select distinct(kreatura.nazwa),if(uczestnicy.id_wyprawy is null,"Nie bral udzialu w wyprawie","bral udzialu w wyprawie") from kreatura left join uczestnicy on kreatura.Idkreatury=uczestnicy.id_uczestnika order by kreatura.nazwa;
+
+
+
+
+
+
+
