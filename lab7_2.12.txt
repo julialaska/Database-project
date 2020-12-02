@@ -1,0 +1,44 @@
+lab 07
+Zad 4 
+Select nazwa, length(nazwa) from kreatura;
+                    ('Ala ma kota')
+             ,udzwig  length(udzwig) 2 znaki
+             ,dataUr length(dataUr) 10 znaków
+4.1
+select wyprawa.nazwa, sum(length(etapy_wyprawy.dziennik)) from wyprawa, etapy_wyprawy where etapy_wyprawy.idwyprawy=wyprawa.id_wyprawy group by wyprawa.nazwa having sum(length(etapy_wyprawy.dziennik))<400;
+                                                                      join etapy_wyprawy on 
+4.2
+select wyprawa.nazwa, (sum(ekwipunek.waga*ilosc)\count(wyprawa.iduczestnika) group by wyprawa.nazwa
+                     sum(zasob.waga) from wyprawa join uczestnicy on uczestnicy.id_wyprawy join kreatura on uczestnicy.id_uczestnika=kreatura.idkreatury group by wyprawa.nazwa
+
+select id_wyprawy, count(*) from uczestnicy group by id_wyprawy
+
+select wyprawa.nazwa, count( distinct(uczestnicy.id_uczestnika)), sum(ekwipuenk.ilosc*zasob.waga)\count
+
+SELECT w.nazwa,COUNT(DISTINCT(u.id_uczestnika)),
+SUM(e.ilosc*z.waga)/COUNT(DISTINCT(u.id_uczestnika)) AS "średnia waga"
+FROM wyprawa AS w
+LEFT JOIN uczestnicy AS u ON w.id_wyprawy = u.id_wyprawy
+LEFT JOIN kreatura AS k ON u.id_uczestnika = k.idKreatury
+LEFT JOIN ekwipunek AS e ON k.idKreatury= e.idKreatury
+LEFT JOIN zasob AS z ON e.idZasobu = z.idZasobu
+GROUP BY w.nazwa;
+
+
+
+Zad 5
+datediff() rożnica miedzy dwoma datami z dokładnością do dnia
+select datediff(now(), dataUr) from kreatura;
+select datediff(abs(dataUr,now())) from kreatura; ujemna wartosc
+
+select current_timestamp;
+adddata( data bazowa, interval 14 day) pokazuje o 14 dni później
+
+week() zwraca nr tygodnia
+
+select kreatura.nazwa, datediff(wyprawa.data_rozpoczecia,kreatura.dataur) from wyprawa join uczestnicy on wyprawa.id_wyprawy=uczestnicy.id_wyprawy join kreatura on uczestnicy.id_uczestnika=kreatura.idkreatury join etapy_wyprawy on wyprawa.id_wyprawy=etapy_wyprawy.idwyprawy where etapy_wyprawy.sektor=7;
+                                                                                                                                                                                                                            join sektor on etapy_wyprawy.sektor=sektor.id_sektora where sektor.nazwa like "Chatka dzia%";
+
+
+
+
