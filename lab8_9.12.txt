@@ -1,0 +1,120 @@
+DELIMITER $$
+CREATE PROCEDURE premia(IN id int)
+BEGIN
+Update pracownik SET pensja=1.2* pensja WHERE id_pracownika=id;
+END
+$$
+DELIMITER;
+
+CALL premia(10) wywołanie
+
+CREATE PROCEDURE przedstaw-sie(IN id int, OUT powitanie VARCHAR(255))
+BEGIN
+SELECT concat() INTO powitanie from pracownik where
+END
+$$
+DELIMITER
+
+CALL przedstaw_sie(20,@p);
+SELECT @p;
+
+
+CREATE PROCEDURE() bez argumentowa
+BEGIN
+DELETE FROM uzytkownict WHERE datediff(now(),data)
+END
+
+
+FUNKCJA
+DELIMITER//
+CREATE FUNCTION count_pracownicy()
+  RETURNS INTEGER
+BEGIN 
+  DECLARE ile INT;
+  SELECT COUNT(*) INTO @ile FROM pracownik;
+  RETURN @ile;
+END//
+
+SELECT count_pracownicy()
+
+Zad 3
+3.1
+DELIMITER $$
+CREATE PROCEDURE eliksir_sily(IN id int)
+BEGIN
+Update kreatura SET udzwig=1.2*udzwig WHERE id_kreatury=id;
+END
+$$
+DELIMITER;
+
+3.2
+DELIMITER//
+CREATE FUNCTION pobierz(tekst VARCHAR(100))
+  RETURNS VARCHAR(100)
+BEGIN 
+  SELECT UPPER(tekst)
+  RETURN tekst;
+END//
+
+DELIMITER//
+CREATE FUNCTION wielka(tekst VARCHAR(100))
+  RETURNS VARCHAR(100)
+BEGIN 
+  SELECT UPPER(tekst) into @duze;
+  RETURN @duze;
+END//
+
+select @duze
+
+DELIMITER//
+CREATE FUNCTION wielka(tekst VARCHAR(100))
+  RETURNS VARCHAR(100)
+BEGIN 
+  SELECT UPPER(tekst) into duze;
+  RETURN duze;
+END//
+
+SELECT duze("cos tam")
+
+
+ DROP FUNCTION (WIELKA)
+Zad 4
+4.1
+CREATE TABLE system_alarmowy(id_alarmu INT, wiadomosc VARCHAR(255));
+4.2
+DELIMITER $$
+CREATE TRIGGER uczestnicy_after_insert
+AFTER INSERT ON uczestnicy
+FOR EACH ROW
+BEGIN
+declare ile_rekordow int;
+SELECT count (*)from
+ k.nazwa,s.nazwa,w.id_wyprawy FROM kreatura k, wyprawa w, sektor s, uczestnicy u, etapy_wyprawy ew
+WHERE k.idekreatury=u.id_uczestnika AND u.id_wyprawy=w.id_wyprawy AND w.id_wyprawy=ew.idwyprawy AND ew.sektor=7
+NAD k.nazwa='Tesciowa'
+and w.id_wyprawy=new.id_wyprawy;
+
+IF ile_rekordow>0
+THEN 
+insert into  system_alarmowy 
+values(default,'tesciowa nadchodzi !!!')
+end if;
+end
+$$
+delimiter;
+
+Zad 5
+Delimiter$$
+CREATE PROCEDURE srednia_itp(OUT srednia FLOAT,OUT suma FLOAT,OUT maks FLOAT)
+BEGIN 
+  SELECT AVG(udzwig),sum(udzwig),max(udzwig)
+into srednia,suma,maks from kreatura
+END
+$$
+
+CALL srednia_itp(@sr,@sum,@maks);
+
+select @sr as srednia, @sum as suma,@maks as max;
+DELIMITER;
+
+
