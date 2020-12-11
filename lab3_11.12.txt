@@ -1,0 +1,72 @@
+
+1.
+select pracownik.imie,pracownik.nazwisko,dzial.nazwa from pracownik, dzial where pracownik.dzial=dzial.id_dzialu;
+
+2.
+SELECT towar.nazwa_towaru, kategoria.nazwa_kategori, stan_magazynowy.ilosc FROM towar 
+JOIN kategoria ON kategoria.id_kategori=towar.kategoria
+JOIN stan_magazynowy AS ON towar.id_towaru=stan_magazynowy.towar
+ORDER BY stan_magazynowy.ilosc DESC;
+
+3.
+SELECT * FROM zamowienie
+JOIN status_zamowienia ON id_statusu_zamowienia=status_zamowienia
+WHERE id_statusu_zamowienia = 6;
+
+4.
+select * from klient join adres_klienta on klient.id_klienta=adres_klienta.klient
+join typ_adresu ON adres_klienta.typ_adresu=typ_adresu.id_typu
+WHERE miejscowosc="Olsztyn" and typ_adresu.nazwa="podstawowy";
+
+5.
+SELECT nazwa FROM jednostka_miary
+LEFT JOIN stan_magazynowy ON jednostka_miary.id_jednostki=stan_magazynowy.jednostka_miary
+WHERE stan_magazynowy.jednostka_miary is null;
+
+6.
+select zamowienie.numer_zamowienia,pozycja_zamowienia.cena,kategoria.nazwa_kategori,pozycja_zamowienia.ilosc from zamowienie inner join pozycja_zamowienia on pozycja_zamowienia.zamowienie=zamowienie.id_zamowienia inner join towar on towar.id_towaru=pozycja_zamowienia.towar inner join kategoria on towar.kategoria=kategoria.id_kategori  where  year(zamowienie.data_zamowienia)=2018; 
+
+7.
+8.
+select* from pozycja_zamowienia join zamowienie on pozycja_zamowienia.zamowienie=zamowienie.id_zamowienia
+order by zamowienie.data_zamowienia limit 5;
+
+
+9.
+select * from zamowienie left join status_zamowienia on zamowienie.status_zamowienia=status_zamowienia.id_statusu_zamowienia
+where nazwa_statusu_zamowienia != "zrealizowane";
+
+
+10.
+select * from adres_klienta where kod NOT LIKE "__-___";
+
+lab 3
+1.
+SELECT imie,nazwisko,data_urodzenia FROM pracownik;
+
+2.
+SELECT imie,nazwisko,2020-year(data_urodzenia) FROM pracownik;
+
+3. 
+SELECT dzial.nazwa,COUNT(pracownik.Id_pracownika) FROM pracownik,dzial where pracownik.dzial=dzial.id_dzialu GROUP BY dzial.nazwa;
+
+4.
+select kategoria.nazwa_kategori,towar.nazwa_towaru from kategoria,towar where kategoria.id_kategori=towar.id_towaru;
+
+select kategoria.nazwa_kategori,count(towar.nazwa_towaru) from kategoria inner join towar ON towar.kategoria=kategoria.id_kategori INNER JOIN stan_magazynowy where towar.kategoria=id_kategori Group by id_kategori ;
+select kategoria.nazwa_kategori,count(towar.nazwa_towaru) from kategoria,towar,stan_magazynowy where towar.kategoria=kategoria.id_kategori and towar.kategoria=id_kategori and towar.id_towaru=stan_magazynowy.towar group by id_kategori ;
+
+
+5.
+SELECT kategoria.nazwa_kategori, GROUP_CONCAT(towar.nazwa_towaru) from kategoria,towar where t.kategoria=k.id_kategori
+GROUP BY k.nazwa_kategori;
+
+6.
+SELECT Round(avg(pensja),2) FROM pracownik;
+
+7.
+SELECT Round(avg(pensja),2) FROM pracownik where (2020-year(data_zatrudnienia))>5;
+
+SELECT id_pracownika, AVG(pensja),2020-YEAR(data_zatrudnienia) AS staz FROM pracownik
+WHERE staz > 5
+GROUP BY id_pracownika;
