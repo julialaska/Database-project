@@ -1,0 +1,49 @@
+select imie, cast(current_date as unsigned) from pracownik;
+select imie, current_date-data_zatrudnienia from pracownik;
+
+update kreatura set pesel='123456653'+id_kreatury;
+
+Zad 8
+select towar.nazwa_towaru,sum(stan_magazynowy.ilosc) as suma from towar,stan_magazynowy where towar.id_towaru=stan_magazynowy.towar group by towar.nazwa_towaru order by suma desc limit 10;
+
+SELECT towar.nazwa_towaru,COUNT(pozycja_zamowienia.towar) FROM pozycja_zamowienia inner JOIN towar on pozycja_zamowienia.towar=towar.id_towaru GROUP BY towar.id_towaru ORDER BY COUNT(pozycja_zamowienia.towar) DESC LIMIT 10;
+
+select z.numer_zamowienia, sum(pz.ilosc*pz.cena) as wartosc from zamowienie z, pozycja_zamowienia as pz
+where z.id_zamowienia=pz.zamowienie
+
+Zad 9
+SELECT z.numer_zamowienia, sum(pz.ilosc*pz.cena) as wartosc
+from zamowienie z, pozycja_zamowienia pz
+where z.id_zamowienia=pz.zamowienie
+group by z.numer_zamowienia;
+
+select quarter("2017-06-15");
+
+SELECT z.numer_zamowienia, sum(pz.ilosc*pz.cena) as wartosc
+from zamowienie z, pozycja_zamowienia pz
+where z.id_zamowienia=pz.zamowienie and quarter(z.data_zamowienia)=1 and year(z.data_zamowienia)=2017
+group by z.numer_zamowienia;
+
+
+Zad 10
+select p.imie,p.nazwisko,sum(pz.ilosc*pz.cena)
+
+SELECT p.imie, p.nazwisko, sum(pz.ilosc*pz.cena) as Suma
+from zamowienie z, pozycja_zamowienia pz, pracownik p
+where z.id_zamowienia=pz.zamowienie
+and p.id_pracownika = z.pracownik_id_pracownika
+group by p.id_pracownika order by Suma desc;
+
+Lab 3 Zad 2
+zad1
+select nazwa_dzialu, min(avg(
+select dzial.nazwa_dzialu,min(pracownik.pensja),AVG(pracownik.pensja),MAX(pracownik.pensja) FROM dzial INNER JOIN pracownik ON pracownik.dzial=dzial.id_dzialu Group by pracownik.dzial;
+
+zad2
+select k.pelna_nazwa,sum(pz.ilosc*pz.cena) as suma from klient as k inner join zamowienie as z on k.id_klienta=z.klient inner join pozycja_zamowienia as pz
+on z.id_zamowienia=pz.zamowienie order by suma desc;
+
+select k.pelna_nazwa,sum(pz.ilosc*pz.cena) as suma from klient as k inner join zamowienie as z on k.id_klienta=z.klient inner join pozycja_zamowienia as pz
+on z.id_zamowienia=pz.zamowienie group by k.pelna_nazwa order by suma desc limit 10;
+
+
