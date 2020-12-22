@@ -1,0 +1,45 @@
+show create table    ; i zmienić
+alter table zaznaczajac
+engine  i apply
+
+
+lock table ... read;
+unlock tables;
+
+show processlist
+kill ...  ;id-nazwa procesu
+
+
+
+transakcje
+procedury
+
+start transaction;
+
+instrukcje
+
+wycofanie
+
+if jakis_blad
+then
+rollback;
+
+zatwierdzenie zmian
+commit;
+
+start transaction;
+update postac set wiek=999
+where nazwa='Alibaba';
+select *from postac;
+
+tymczasowe zmiany
+rollback; wycofanie
+commit; 
+
+
+
+
+
+
+
+
