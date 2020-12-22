@@ -1,0 +1,89 @@
+select imie, cast(current_date as unsigned) from pracownik;
+select imie, current_date-data_zatrudnienia from pracownik;
+
+update kreatura set pesel='123456653'+id_kreatury;
+
+Zad 8
+select towar.nazwa_towaru,sum(stan_magazynowy.ilosc) as suma from towar,stan_magazynowy where towar.id_towaru=stan_magazynowy.towar group by towar.nazwa_towaru order by suma desc limit 10;
+
+SELECT towar.nazwa_towaru,COUNT(pozycja_zamowienia.towar) FROM pozycja_zamowienia inner JOIN towar on pozycja_zamowienia.towar=towar.id_towaru GROUP BY towar.id_towaru ORDER BY COUNT(pozycja_zamowienia.towar) DESC LIMIT 10;
+
+select z.numer_zamowienia, sum(pz.ilosc*pz.cena) as wartosc from zamowienie z, pozycja_zamowienia as pz
+where z.id_zamowienia=pz.zamowienie
+
+Zad 9
+SELECT z.numer_zamowienia, sum(pz.ilosc*pz.cena) as wartosc
+from zamowienie z, pozycja_zamowienia pz
+where z.id_zamowienia=pz.zamowienie
+group by z.numer_zamowienia;
+
+select quarter("2017-06-15");
+
+SELECT z.numer_zamowienia, sum(pz.ilosc*pz.cena) as wartosc
+from zamowienie z, pozycja_zamowienia pz
+where z.id_zamowienia=pz.zamowienie and quarter(z.data_zamowienia)=1 and year(z.data_zamowienia)=2017
+group by z.numer_zamowienia;
+
+
+Zad 10
+select p.imie,p.nazwisko,sum(pz.ilosc*pz.cena)
+
+SELECT p.imie, p.nazwisko, sum(pz.ilosc*pz.cena) as Suma
+from zamowienie z, pozycja_zamowienia pz, pracownik p
+where z.id_zamowienia=pz.zamowienie
+and p.id_pracownika = z.pracownik_id_pracownika
+group by p.id_pracownika order by Suma desc;
+
+Lab 3 Zad 2
+zad1
+select nazwa_dzialu, min(avg(
+select dzial.nazwa_dzialu,min(pracownik.pensja),AVG(pracownik.pensja),MAX(pracownik.pensja) FROM dzial INNER JOIN pracownik ON pracownik.dzial=dzial.id_dzialu Group by pracownik.dzial;
+
+zad2
+select k.pelna_nazwa,sum(pz.ilosc*pz.cena) as suma from klient as k inner join zamowienie as z on k.id_klienta=z.klient inner join pozycja_zamowienia as pz
+on z.id_zamowienia=pz.zamowienie order by suma desc;
+
+select k.pelna_nazwa,sum(pz.ilosc*pz.cena) as suma from klient as k inner join zamowienie as z on k.id_klienta=z.klient inner join pozycja_zamowienia as pz
+on z.id_zamowienia=pz.zamowienie group by k.pelna_nazwa order by suma desc limit 10;
+
+
+SELECT klient.pelna_nazwa,SUM(pozycja_zamowienia.ilosc*pozycja_zamowienia.cena) AS wartosc
+FROM klient INNER JOIN zamowienie ON zamowienie.klient=klient.id_klienta
+INNER JOIN pozycja_zamowienia ON pozycja_zamowienia.zamowienie=zamowienie.id_zamowienia
+GROUP BY zamowienie.id_zamowienia ORDER BY wartosc DESC LIMIT 10;
+
+SELECT SUM(pozycja_zamowienia.ilosc*pozycja_zamowienia.cena) as wartosc,YEAR(zamowienie.data_zamowienia) AS rok FROM zamowienie INNER JOIN pozycja_zamowienia ON pozycja_zamowienia.zamowienie=zamowienie.id_zamowienia GROUP BY rok ORDER BY wartosc DESC ;
+
+
+Zad 4
+SELECT SUM(pozycja_zamowienia.ilosc*pozycja_zamowienia.cena) as wartosc,status_zamowienia.nazwa_statusu_zamowienia FROM zamowienie INNER JOIN pozycja_zamowienia ON pozycja_zamowienia.zamowienie=zamowienie.id_zamowienia INNER JOIN status_zamowienia  ON status_zamowienia.id_statusu_zamowienia=zamowienie.status_zamowienia WHERE nazwa_statusu_zamowienia="anulowane";
+
+
+Zad 5
+SELECT adres_klienta.miejscowosc,
+sum(pozycja_zamowienia.ilosc*pozycja_zamowienia.cena) as wartosc,
+count(distinct(zamowienie.id_zamowienia))
+FROM klient INNER JOIN zamowienie ON zamowienie.klient=klient.id_klienta
+INNER JOIN pozycja_zamowienia ON pozycja_zamowienia.zamowienie=zamowienie.id_zamowienia
+INNER JOIN adres_klienta ON klient.id_klienta=adres_klienta.klient
+INNER JOIN typ_adresu ON typ_adresu.id_typu=adres_klienta.typ_adresu
+WHERE adres_klienta.typ_adresu='1' group by adres_klienta.miejscowosc with rollup;
+
+modyfikacja
+SELECT adres_klienta.miejscowosc,
+sum(pozycja_zamowienia.ilosc*pozycja_zamowienia.cena) as wartosc,
+count(distinct(zamowienie.id_zamowienia)),
+zamowienie.id_zamowienia
+FROM klient INNER JOIN zamowienie ON zamowienie.klient=klient.id_klienta
+INNER JOIN pozycja_zamowienia ON pozycja_zamowienia.zamowienie=zamowienie.id_zamowienia
+INNER JOIN adres_klienta ON klient.id_klienta=adres_klienta.klient
+INNER JOIN typ_adresu ON typ_adresu.id_typu=adres_klienta.typ_adresu
+WHERE adres_klienta.typ_adresu='1' group by adres_klienta.miejscowosc,
+zamowienie.id_zamowienia with rollup;
+
+
+Zad 6
+SELECT SUM(pozycja_zamowienia.ilosc*pozycja_zamowienia.cena) as przychod,SUM(towar.cena_zakupu*pozycja_zamowienia.ilosc) as wydatki,SUM(pozycja_zamowienia.ilosc*pozycja_zamowienia.cena)-SUM(towar.cena_zakupu*pozycja_zamowienia.ilosc) as dochod,status_zamowienia.nazwa_statusu_zamowienia FROM zamowienie INNER JOIN pozycja_zamowienia ON pozycja_zamowienia.zamowienie=zamowienie.id_zamowienia INNER JOIN towar ON towar.id_towaru=pozycja_zamowienia.towar  INNER JOIN status_zamowienia  ON status_zamowienia.id_statusu_zamowienia=zamowienie.status_zamowienia WHERE nazwa_statusu_zamowienia="zrealizowane";
+
+
+Zad 7
